@@ -40,7 +40,7 @@ def predict():
               metrics=['accuracy'])
 
 
-    model_1=tf.keras.models.load_model('./mobile_net_cancer_22.h5')
+    model_1=tf.keras.models.load_model('./mobile_net_cancer.h5')
     # print(tf.keras.models.load_model('mobile_net_cancer.h5').summary())
     features=[]
     # img = cv2.imread('./type3.jpg')
