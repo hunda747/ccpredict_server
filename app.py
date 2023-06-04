@@ -3,8 +3,10 @@ import numpy as np
 import cv2
 from flask import Flask, request, jsonify
 from PIL import Image
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -40,7 +42,7 @@ def predict():
               metrics=['accuracy'])
 
 
-    model_1=tf.keras.models.load_model('./mobile_net_cancer_22.h5')
+    model_1=tf.keras.models.load_model('./mobile_net_cancer.h5')
     # print(tf.keras.models.load_model('mobile_net_cancer.h5').summary())
     features=[]
     # img = cv2.imread('./type3.jpg')
@@ -53,15 +55,15 @@ def predict():
     preds=model_1.predict(np.array(features))
     result=preds.argmax()
     if result == 0:
-      result='Type_1'
+      result='1'
     elif result == 1:
-      result= 'Type_2'
+      result= '2'
     else:
-      result ='Type_3'
+      result ='3'
     print(result)
 
     # Return the predictions as a JSON response
     return jsonify({'probabilities': result})  # Replace with actual probabilities
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
